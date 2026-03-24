@@ -20,4 +20,4 @@
 
 ## Notes
 
-AgentForger was migrated from Skillforge on 2026-03-23. The user prefers the new 8-phase workflow and explicit mode declarations at the start of each session.
+AgentForger was migrated from AgentForger on 2026-03-23. The user prefers the new 8-phase workflow and explicit mode declarations at the start of each session.

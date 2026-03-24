@@ -3,7 +3,7 @@
 ## Persistent facts
 
 - Workspace root: `/home/rojas/.openclaw/workspaces-rojas/main`
-- Tooling directory: `agentforger/` (migrated from `skillforge/` on 2026-03-23)
+- Tooling directory: `agentforger/` (migrated from `agentforger/` on 2026-03-23)
 - Validators location: `agentforger/validators/`
 - Self-check: `npm --prefix agentforger test`
 - Skills root: `skills/`
