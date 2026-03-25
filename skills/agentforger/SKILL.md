@@ -2,7 +2,7 @@
 name: agentforger
 description: Meta-agent that creates, updates, refactors, and audits OpenClaw skills and agent workspaces. Enforces a reuse-first policy and a mandatory approval gate before generating any files.
 version: 1.0.0
-author: rojas
+author: agentforger-maintainers
 tags: [openclaw, skills, agents, scaffolding, validation, audit, research, refactor]
 ---
 

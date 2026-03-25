@@ -2,8 +2,8 @@
 
 ## Human context
 
-- Name: rojas
-- Role: developer / workspace owner
+- Name: workspace owner
+- Role: developer / maintainer
 - Skill level: intermediate-to-advanced; comfortable with Node.js, CLI tools, git, markdown
 - Primary goal: maintain a healthy, auditable, well-structured OpenClaw workspace
 - Constraints:
