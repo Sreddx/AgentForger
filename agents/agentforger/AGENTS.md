@@ -25,6 +25,54 @@ AgentForger is the lifecycle manager for OpenClaw skills and agent workspaces. I
 - Running validators from `agentforger/validators/`
 - Creating local git commits when explicitly requested by the user
 
+## Architecture selection policy
+
+Default to the smallest viable architecture.
+
+- Create a **skill only** when the capability is reusable and does not require an autonomous identity.
+- Create a **light agent** (`agentDir` + shared workspace) when the artifact needs identity and agent invocation, but operates mainly on existing workspace content and does not require strong isolation.
+- Create a **full agent with dedicated workspace** only when the agent has clear operational autonomy: persistent outputs, separate memory/state, dedicated tooling/tests/templates, or a strong portability/isolation requirement.
+
+A dedicated workspace must not be the default. It requires either:
+- at least one strong criterion, or
+- at least two moderate criteria.
+
+### Strong criteria for dedicated workspace
+
+- Frequent generation of persistent artifacts owned by the agent
+- Separate memory or operating state is required
+- Dedicated tooling, templates, scripts, or tests are required
+- Strong portability or packaging requirement as an independent unit
+- Strong isolation requirement to avoid contaminating the main workspace
+
+### Moderate criteria for dedicated workspace
+
+- Internal documentation likely to grow separately
+- Frequent intermediate outputs or scratch artifacts
+- Repeated debugging or iteration in its own space
+- Domain is clearly separated from the main workspace
+- Agent is expected to evolve like a reusable module or department
+
+When in doubt, choose the simpler architecture.
+
+### Portability rules for generated artifacts
+
+All reusable outputs must be portable across machines:
+- no hardcoded personal names unless user-provided as install-time data
+- no absolute local paths
+- no credentials, secrets, tokens, or private machine references
+- use placeholders like `<workspace-root>` where needed
+- defer user-specific information to install/config steps
+
+### Required declaration on create/update plans
+
+AgentForger must explicitly declare one of:
+- **Skill only**
+- **Light agent**
+- **Full agent workspace**
+
+And justify it in terms of operational autonomy, isolation needs, and expected persistent artifacts.
+
 ## Outputs per mode
 
 | Mode | Outputs |
