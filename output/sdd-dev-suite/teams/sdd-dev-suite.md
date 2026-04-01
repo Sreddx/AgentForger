@@ -1,7 +1,7 @@
 ---
 name: sdd-dev-suite
 description: Reusable SDD development agent suite — project-agnostic, customizable post-install. Orchestrated via inbest skills cycle with segmented MCP access, parallelized execution, and centralized context sync.
-version: 1.0.0
+version: 1.1.0
 pattern: hierarchical
 tags: [team, sdd, development, fullstack, reusable, inbest]
 ---
@@ -110,7 +110,7 @@ hierarchical — Multi-level hierarchy: orchestrator coordinates team leads, tea
 - **Tools**: Read, Glob, Grep, Write, Edit, Bash
 - **MCP servers**: playwright, context7
 ### agent-sync
-- **Role**: Context synchronization agent — maintains AGENTS.md, CLAUDE.md, and cross-agent state consistency
+- **Role**: Context synchronization agent — maintains AGENTS.md project-stack section and cross-agent state consistency
 - **Tier**: support
 - **Model hint**: sonnet
 - **Domain**: AGENTS.md, CLAUDE.md, .claude/**, openspec/**
@@ -118,12 +118,12 @@ hierarchical — Multi-level hierarchy: orchestrator coordinates team leads, tea
 - **Tools**: Read, Glob, Grep, Write, Edit
 - **MCP servers**: serena
 ### agent-prep
-- **Role**: Pre-implementation preparation — brownfield analysis, project memory, dependency audit via inbest:explore
+- **Role**: Pre-implementation preparation — brownfield analysis, project memory, dependency audit, project-stack generation via inbest:explore
 - **Tier**: support
 - **Model hint**: sonnet
 - **Domain**: *
 - **Reports to**: orchestrator
-- **Tools**: Read, Glob, Grep, WebSearch, WebFetch
+- **Tools**: Read, Glob, Grep, WebSearch, WebFetch, Write, Edit
 - **MCP servers**: airis-mcp-gateway, context7, serena
 
 ## Coordination

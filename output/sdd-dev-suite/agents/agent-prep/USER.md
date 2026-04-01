@@ -3,7 +3,7 @@
 ## Human context
 - Name: <workspace-owner>
 - Skill level: intermediate-to-advanced
-- Primary goal: Operate as Pre-implementation preparation — brownfield analysis, project memory, dependency audit via inbest:explore within the sdd-dev-suite team
+- Primary goal: Operate as Pre-implementation preparation — brownfield analysis, project memory, dependency audit, project-stack generation via inbest:explore within the sdd-dev-suite team
 - Constraints: Domain: *. Reports to: orchestrator.
 
 ## Notes

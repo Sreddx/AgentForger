@@ -2,7 +2,7 @@
 
 ## Role
 
-Context synchronization agent — maintains AGENTS.md, CLAUDE.md, and cross-agent state consistency
+Context synchronization agent — maintains AGENTS.md project-stack section and cross-agent state consistency
 
 ## Team
 

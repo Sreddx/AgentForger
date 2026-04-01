@@ -3,7 +3,7 @@
 ## Human context
 - Name: <workspace-owner>
 - Skill level: intermediate-to-advanced
-- Primary goal: Operate as Context synchronization agent — maintains AGENTS.md, CLAUDE.md, and cross-agent state consistency within the sdd-dev-suite team
+- Primary goal: Operate as Context synchronization agent — maintains AGENTS.md project-stack section and cross-agent state consistency within the sdd-dev-suite team
 - Constraints: Domain: AGENTS.md, CLAUDE.md, .claude/**, openspec/**. Reports to: orchestrator.
 
 ## Notes

@@ -101,9 +101,9 @@ cp -r .claude/agents/ <your-project>/.claude/agents/
 cp installer/merge-claude-agents.js <your-project>/installer/
 ```
 
-### 2. First Run — Project Onboarding
+### 2. First Run — Project Onboarding (Bootstrap Gate)
 
-When you start working on a new project with the suite:
+Every agent (except `agent-prep` and `devstart`) checks AGENTS.md for the `<!-- inbest:section:project-stack -->` section on startup. If it's missing, the agent **blocks and requests onboarding**. This ensures no agent operates without knowing the project's stack and conventions.
 
 ```
 User → Orchestrator: "Set up this project for SDD development"
@@ -111,12 +111,60 @@ User → Orchestrator: "Set up this project for SDD development"
 
 The orchestrator will:
 
-1. **Invoke `agent-prep`** — scans the codebase, detects tech stack, generates project memory via serena, audits dependencies
-2. **Invoke `devstart`** — validates environment, installs dependencies, runs build checks
-3. **Invoke `agent-sync`** — updates AGENTS.md with discovered conventions
-4. **Report readiness** — lists what was found, any issues, recommended profile
+1. **Invoke `agent-prep`** — scans the codebase, detects tech stack, writes `<!-- inbest:section:project-stack -->` to AGENTS.md, audits dependencies. Works with or without MCP.
+2. **Invoke `devstart`** — validates environment, installs dependencies, probes MCP availability, runs build checks
+3. **Invoke `agent-sync`** — persists MCP availability status into the project-stack section
+4. **Report readiness** — lists what was found, any issues, recommended profile, MCP status
 
-### 3. Feature Development Flow
+After onboarding, AGENTS.md contains the project-stack section:
+
+```markdown
+<!-- inbest:section:project-stack:1.0.0 -->
+## Project Stack
+- **Runtime**: Node.js 20.x
+- **Language**: TypeScript 5.x
+- **Framework**: Next.js 14, Express 4
+- **UI Library**: React 18, Tailwind CSS 3
+- **ORM/Database**: Prisma 5 + PostgreSQL 15
+- **Test Framework**: Vitest, Playwright
+- **Package Manager**: pnpm 8
+
+## Conventions
+- Components use PascalCase, services use camelCase
+- API routes follow RESTful naming
+
+## Architecture
+- Monorepo with apps/ and packages/ structure
+
+## Constraints
+- Node 20+ required, no CommonJS
+
+## MCP Availability (last checked: 2026-04-01)
+- airis-mcp-gateway: OK
+- serena: OK
+- context7: OK
+- playwright: UNAVAILABLE
+- supabase: UNAVAILABLE
+<!-- /inbest:section:project-stack -->
+```
+
+All agents read this section to know the stack, conventions, and which MCPs are available.
+
+### 3. MCP Graceful Degradation
+
+Every agent has fallback behavior when its MCP servers are unavailable. **No MCP is required — they all enhance but never block.**
+
+| MCP Server | Used by | Fallback when unavailable | Warning emitted |
+|------------|---------|---------------------------|-----------------|
+| **airis-mcp-gateway** | orchestrator, researcher, planner, validator, agent-prep | Use native Grep/Glob/WebSearch | `[MCP] WARNING: airis-mcp-gateway not reachable` |
+| **context7** | researcher, planner, frontend, backend, database, devstart, testers, agent-prep | WebSearch + package.json versions; mark API claims as `needs-verification` | `[MCP] WARNING: context7 not reachable` |
+| **serena** | orchestrator, planner, team-leader, agent-sync, agent-prep | File-based state in `.claude/state/`; all memory goes to AGENTS.md | `[MCP] WARNING: serena not reachable` |
+| **playwright** | frontend, tester-front | CLI (`npx playwright test`) if installed; otherwise component tests only; flag e2e as `INCOMPLETE` | `[MCP] WARNING: playwright not reachable` |
+| **supabase** | database | ORM CLI via Bash (`npx prisma`, `supabase` CLI) | `[MCP] WARNING: supabase MCP not reachable` |
+
+The `devstart` agent probes all MCPs during bootstrap and reports status. The `agent-sync` agent writes this status into the project-stack section so all agents know upfront which fallbacks to expect.
+
+### 4. Feature Development Flow
 
 ```
 User: "Implement user authentication with OAuth2"
@@ -177,7 +225,7 @@ User: "Implement user authentication with OAuth2"
    └─────────────┘
 ```
 
-### 4. Parallelization Model
+### 5. Parallelization Model
 
 Agents work in **waves** managed by the orchestrator:
 
@@ -194,7 +242,7 @@ Agents work in **waves** managed by the orchestrator:
 
 **Within a wave**, agents with non-overlapping domains run in parallel. **Between waves**, dependencies are respected.
 
-### 5. Escalation Protocol
+### 6. Escalation Protocol
 
 ```
 Something unclear or blocked?
@@ -211,7 +259,7 @@ Rules:
   - Never retry a third time automatically
 ```
 
-### 6. Context Management
+### 7. Context Management
 
 Each agent receives a **minimal context envelope**:
 
@@ -232,7 +280,7 @@ agent does NOT receive:
 
 **agent-sync** monitors context usage and flags agents loading files outside their domain.
 
-### 7. Token Resilience
+### 8. Token Resilience
 
 Sessions can end mid-work due to token limits. The suite handles this:
 
@@ -247,7 +295,7 @@ To resume after a session ends:
 User → Orchestrator: "Resume work on <change-name>"
 ```
 
-### 8. MCP Access Segmentation
+### 9. MCP Access Segmentation
 
 Agents only access the MCP servers relevant to their domain:
 
@@ -262,7 +310,7 @@ Agents only access the MCP servers relevant to their domain:
 | Quality | airis-mcp-gateway | validator |
 | Sync | serena | team-leader, agent-sync |
 
-### 9. Quality Scorecard
+### 10. Quality Scorecard
 
 The **validator** produces a scorecard after each verification:
 
@@ -283,7 +331,7 @@ Issues:
   SUGGESTION: Add OpenAPI spec for /auth/callback endpoint
 ```
 
-### 10. Customization
+### 11. Customization
 
 After installation, agents are **fully customizable** per project:
 

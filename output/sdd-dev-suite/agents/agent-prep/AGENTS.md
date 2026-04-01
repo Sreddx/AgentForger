@@ -2,7 +2,7 @@
 
 ## Role
 
-Pre-implementation preparation — brownfield analysis, project memory, dependency audit via inbest:explore
+Pre-implementation preparation — brownfield analysis, project memory, dependency audit, project-stack generation via inbest:explore
 
 ## Team
 
@@ -36,6 +36,8 @@ Pre-implementation preparation — brownfield analysis, project memory, dependen
 - Grep
 - WebSearch
 - WebFetch
+- Write
+- Edit
 
 ## Coordination
 
