@@ -14,16 +14,22 @@ AgentForger operates in four distinct modes. Declare the mode at the start of ea
 ## Inputs
 
 - `mode`: create | update | refactor | audit
-- `type`: skill | agent | both
+- `type`: skill | agent | both | **team**
 - `target`: name/path of the artifact (for update/refactor/audit)
 - `domain`: what it does
 - `surface`: CLI / files / web / messaging / API
 - `constraints`: allowed tools, security requirements, performance limits, language
 - `export_format`: local workspace (default) | git-ready
+- `pattern`: (team only) supervisor | hierarchical | react | plan-and-execute
+- `output_target`: (team only) openclaw | claude | both
 
 ## Outputs
 
 - Artifacts written to `skills/` and/or `agents/`
+- **Team outputs** (when type=team):
+  - OpenClaw: `agents/<name>/` per agent (SOUL.md, AGENTS.md, USER.md, MEMORY.md)
+  - Claude Code: `.claude/agents/<name>.md` per agent
+  - Team spec: `teams/<team-name>.md`
 - Understanding Summary (produced during clarification phase)
 - Research Pack (3–8 sources with bullets)
 - Spec document (contract + workflow + file list)
@@ -69,6 +75,8 @@ Propose a design:
 - Key decisions and trade-offs
 - Reuse-first justification
 
+**For teams (type=team):** Select an orchestration pattern (supervisor, hierarchical, react, plan-and-execute). Justify the pattern choice based on team size, domain separation, and coordination needs. See `agentforger/docs/patterns.md` for the selection guide.
+
 ### Phase 5 — Plan
 Produce a concrete **Spec**:
 - Input/output contract
@@ -94,8 +102,26 @@ node agentforger/validators/validate-audit.mjs   skills/<name>  # or agents/<nam
 ```
 Fix all FAILs. Address WARNs where feasible. Deliver audit report with scorecard.
 
+## Orchestration patterns
+
+When `type=team`, AgentForger generates coordinated agent teams. The pattern is selected during phase 4 (Architecture).
+
+| Pattern | Structure | Team size | Key trait |
+|---------|-----------|-----------|-----------|
+| `supervisor` | 1 lead + N workers | 3–7 | Centralized coordination |
+| `hierarchical` | orchestrator → team leads → workers | 7+ | Multi-level delegation, max 3 levels |
+| `react` | Single iterative agent | 1 | Thought→Action→Observation loop |
+| `plan-and-execute` | 1 planner + N executors | 2+ | Immutable plan, cheap execution |
+
+Dual output from a single team spec:
+- **OpenClaw**: `agents/<name>/` (SOUL.md, AGENTS.md, USER.md, MEMORY.md) — works with any LLM
+- **Claude Code**: `.claude/agents/<name>.md` — native subagent with model, tools, MCP config
+
+See `agentforger/docs/patterns.md` for full details and selection guide.
+
 ## Smoke check definitions
 
 - **Skill**: frontmatter complete (name, description, version, tags) + structural sections (Purpose, Limits, Workflow, Quality criteria, Examples)
 - **Agent**: SOUL.md + USER.md + AGENTS.md present and non-trivial; MEMORY.md recommended
+- **Team**: valid pattern, no cycles in reports_to, lead agent present, pattern-specific constraints pass, each generated agent passes validate-agent
 - **Audit**: deep section completeness + limits declared in SOUL.md + operational rules in AGENTS.md

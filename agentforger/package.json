@@ -8,6 +8,8 @@
     "validate:skill": "node validators/validate-skill.mjs",
     "validate:agent": "node validators/validate-agent.mjs",
     "validate:audit": "node validators/validate-audit.mjs",
-    "validate:repo": "node validators/validate-repo.mjs"
+    "validate:repo": "node validators/validate-repo.mjs",
+    "validate:team": "node validators/validate-team.mjs",
+    "generate:team": "node team-generator.mjs"
   }
 }

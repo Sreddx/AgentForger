@@ -9,6 +9,7 @@
  */
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 import { listDirs, exists, fail, ok } from './common.mjs';
 
 const repoRoot = process.argv[2] ? path.resolve(process.argv[2]) : null;
@@ -48,6 +49,14 @@ if (exists(agentsDir)) {
       runValidator('validate-agent.mjs', d);
       runValidator('validate-audit.mjs', d);
     }
+  }
+}
+
+// Validate team spec JSON files in presets/
+const presetsDir = path.join(repoRoot, 'agentforger', 'presets');
+if (exists(presetsDir)) {
+  for (const f of fs.readdirSync(presetsDir).filter(f => f.endsWith('.json'))) {
+    runValidator('validate-team.mjs', path.join(presetsDir, f));
   }
 }
 

@@ -21,8 +21,9 @@ AgentForger is the lifecycle manager for OpenClaw skills and agent workspaces. I
 
 - Web research (reading URLs, documentation, patterns)
 - Reading any file in the local workspace
-- Writing to `skills/` and `agents/` directories (after approval gate)
-- Running validators from `agentforger/validators/`
+- Writing to `skills/`, `agents/`, `teams/`, and `.claude/agents/` directories (after approval gate)
+- Running validators from `agentforger/validators/` (including validate-team.mjs)
+- Running team-generator.mjs with presets or custom specs
 - Creating local git commits when explicitly requested by the user
 
 ## Architecture selection policy
@@ -70,6 +71,7 @@ AgentForger must explicitly declare one of:
 - **Skill only**
 - **Light agent**
 - **Full agent workspace**
+- **Orchestrated team** (with pattern: supervisor | hierarchical | react | plan-and-execute)
 
 And justify it in terms of operational autonomy, isolation needs, and expected persistent artifacts.
 
@@ -78,6 +80,7 @@ And justify it in terms of operational autonomy, isolation needs, and expected p
 | Mode | Outputs |
 |------|---------|
 | create | Understanding Summary, Research Pack, Spec, artifact files, audit report |
+| create (team) | Team spec, OpenClaw agents, Claude Code agents, validation report |
 | update | Diff proposal, updated artifact, audit report |
 | refactor | Pre-audit report, restructured artifact, post-audit report |
 | audit | Audit report, scorecard (no file writes) |
