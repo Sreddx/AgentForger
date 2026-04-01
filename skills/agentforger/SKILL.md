@@ -104,6 +104,23 @@ A dedicated workspace must not be the default. It requires either:
 
 When in doubt, choose the simpler architecture.
 
+### Orchestrated team (fourth architecture level)
+
+Create an **orchestrated team** when the scope requires multiple coordinated agents with distinct domains, roles, and communication patterns. Select an orchestration pattern:
+
+| Pattern | When to use | Team size |
+|---------|-------------|-----------|
+| `supervisor` | Clear task decomposition, centralized audit trail | 3–7 |
+| `hierarchical` | Large teams, separated domains, multi-level delegation | 7+ |
+| `react` | Exploratory/iterative single-agent task | 1 |
+| `plan-and-execute` | Cost optimization, plan/execute separation | 2+ |
+
+Teams produce **dual output** from a single spec:
+- OpenClaw: `agents/<name>/` (SOUL.md, AGENTS.md, USER.md, MEMORY.md) — any LLM
+- Claude Code: `.claude/agents/<name>.md` — native subagent with model/tools/MCP config
+
+Use presets from `agentforger/presets/` or define custom team specs. See `agentforger/docs/patterns.md`.
+
 ### Portability rules for generated artifacts
 
 All reusable outputs must be portable across machines:
@@ -119,6 +136,7 @@ AgentForger must explicitly declare one of:
 - **Skill only**
 - **Light agent**
 - **Full agent workspace**
+- **Orchestrated team** (with pattern: supervisor | hierarchical | react | plan-and-execute)
 
 And justify it in terms of operational autonomy, isolation needs, and expected persistent artifacts.
 
@@ -150,3 +168,11 @@ And justify it in terms of operational autonomy, isolation needs, and expected p
 **Audit only**:
 > "Audit skills/self-improving-agent"
 → Runs validators, reads files, produces audit report + scorecard. No files written.
+
+**Create an orchestrated team**:
+> "Create a fullstack development team with supervisor pattern."
+→ Phase 4 selects supervisor pattern, defines agents (orchestrator, planner, frontend, backend, tester, validator). Phase 6 approval gate. Phase 7 generates dual output (OpenClaw + Claude Code). Phase 8 validates with validate-team.mjs.
+
+**Generate from preset**:
+> `node agentforger/team-generator.mjs agentforger/presets/dev-team-supervisor.json both ./output`
+→ Reads preset, renders team spec + OpenClaw agents + Claude Code agents to output directory.

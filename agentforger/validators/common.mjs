@@ -51,3 +51,20 @@ export function ok(msg) {
 export function warn(msg) {
   console.warn(`WARN: ${msg}`);
 }
+
+// Parse a markdown body containing ### agent blocks into an array of { name, fields }
+export function parseAgentsBlock(body) {
+  const agents = [];
+  const blocks = body.split(/^### /m).filter(Boolean);
+  for (const block of blocks) {
+    const lines = block.trim().split('\n');
+    const name = lines[0].trim();
+    const fields = {};
+    for (let i = 1; i < lines.length; i++) {
+      const m = lines[i].match(/^-\s+\*\*(.+?)\*\*:\s*(.+)$/);
+      if (m) fields[m[1].toLowerCase().replace(/\s+/g, '_')] = m[2].trim();
+    }
+    agents.push({ name, ...fields });
+  }
+  return agents;
+}

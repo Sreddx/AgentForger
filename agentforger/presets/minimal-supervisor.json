@@ -1,0 +1,39 @@
+{
+  "team_name": "minimal-team",
+  "description": "Minimal supervisor team: orchestrator + 2 workers",
+  "version": "1.0.0",
+  "pattern": "supervisor",
+  "tags": ["team", "minimal", "supervisor"],
+  "agents": [
+    {
+      "name": "orchestrator",
+      "role": "Task coordinator and result synthesizer",
+      "tier": "lead",
+      "model_hint": "opus",
+      "domain": ["*"],
+      "reports_to": "user",
+      "tools_needed": ["read", "search", "agent", "tasks"],
+      "instructions": "You are the orchestrator. Receive tasks, decompose them, delegate to workers, and synthesize results. Never implement directly — coordinate only."
+    },
+    {
+      "name": "worker-1",
+      "role": "General-purpose implementation agent",
+      "tier": "specialist",
+      "model_hint": "sonnet",
+      "domain": ["src/**"],
+      "reports_to": "orchestrator",
+      "tools_needed": ["read", "write", "bash"],
+      "instructions": "You are worker-1. Execute tasks assigned by the orchestrator within your domain. Report results and blockers."
+    },
+    {
+      "name": "worker-2",
+      "role": "General-purpose implementation agent",
+      "tier": "specialist",
+      "model_hint": "sonnet",
+      "domain": ["tests/**", "docs/**"],
+      "reports_to": "orchestrator",
+      "tools_needed": ["read", "write", "bash"],
+      "instructions": "You are worker-2. Execute tasks assigned by the orchestrator within your domain. Report results and blockers."
+    }
+  ]
+}

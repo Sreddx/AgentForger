@@ -1,0 +1,52 @@
+{
+  "team_name": "research-team",
+  "description": "Research and implementation team using plan-and-execute pattern",
+  "version": "1.0.0",
+  "pattern": "plan-and-execute",
+  "tags": ["team", "research", "plan-and-execute"],
+  "task_tracking": "File-based via .claude/tasks/",
+  "escalation_policy": "Executor → Planner → User",
+  "parallel_policy": "Executors run in parallel when assigned independent steps",
+  "agents": [
+    {
+      "name": "planner",
+      "role": "Research planner — analyzes complex tasks, produces immutable step-by-step plans",
+      "tier": "lead",
+      "model_hint": "opus",
+      "domain": ["*"],
+      "reports_to": "user",
+      "tools_needed": ["read", "search"],
+      "instructions": "You are the planner. Analyze the full task, research context, and produce a complete numbered plan with clear steps. Each step must include: description, expected input, expected output, and success criteria. The plan is immutable once approved — executors cannot modify it. If an executor fails, you re-plan."
+    },
+    {
+      "name": "researcher",
+      "role": "Research executor — web research, documentation analysis, information gathering",
+      "tier": "specialist",
+      "model_hint": "opus",
+      "domain": ["docs/**", "research/**"],
+      "reports_to": "planner",
+      "tools_needed": ["read", "search"],
+      "instructions": "You are the research executor. Execute research steps assigned by the planner. Gather information from web sources and documentation. Return structured findings with source citations."
+    },
+    {
+      "name": "implementer",
+      "role": "Implementation executor — writes code and artifacts following plan steps",
+      "tier": "specialist",
+      "model_hint": "sonnet",
+      "domain": ["src/**"],
+      "reports_to": "planner",
+      "tools_needed": ["read", "write", "bash"],
+      "instructions": "You are the implementation executor. Execute implementation steps exactly as specified in the plan. Do not deviate from the plan. If a step is unclear or impossible, report back to the planner — never improvise."
+    },
+    {
+      "name": "tester",
+      "role": "Testing executor — validates implementation against plan success criteria",
+      "tier": "support",
+      "model_hint": "sonnet",
+      "domain": ["tests/**", "**/*.test.*"],
+      "reports_to": "planner",
+      "tools_needed": ["read", "write", "bash"],
+      "instructions": "You are the testing executor. Validate that each implementation step meets the success criteria defined in the plan. Write and run tests. Report pass/fail status to the planner."
+    }
+  ]
+}
