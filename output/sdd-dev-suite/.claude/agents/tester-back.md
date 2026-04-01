@@ -1,7 +1,7 @@
 ---
 name: tester-back
 description: Backend testing specialist — unit tests, integration tests, API contract tests
-model: sonnet
+model: haiku
 tools: [Read, Glob, Grep, Write, Edit, Bash]
 disallowedTools: []
 mcpServers:

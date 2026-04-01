@@ -54,10 +54,10 @@ A reusable, project-agnostic suite of 14 Claude Code agents designed for Spec-Dr
 | **backend** | sonnet | specialist | team-leader | context7 | `inbest:implement` |
 | **database** | sonnet | specialist | team-leader | supabase, context7 | `inbest:implement` |
 | **validator** | sonnet | support | orchestrator | airis | `inbest:verify` |
-| **github-ops** | sonnet | support | team-leader | — | git/PR/CI |
+| **github-ops** | haiku | support | team-leader | — | git/PR/CI |
 | **devstart** | sonnet | support | orchestrator | context7 | env bootstrap |
-| **tester-back** | sonnet | specialist | team-leader | context7 | backend tests |
-| **tester-front** | sonnet | specialist | team-leader | playwright, context7 | e2e/component tests |
+| **tester-back** | haiku | specialist | team-leader | context7 | backend tests |
+| **tester-front** | haiku | specialist | team-leader | playwright, context7 | e2e/component tests |
 | **agent-sync** | sonnet | support | orchestrator | serena | context consistency |
 | **agent-prep** | sonnet | support | orchestrator | airis, context7, serena | `inbest:explore` |
 

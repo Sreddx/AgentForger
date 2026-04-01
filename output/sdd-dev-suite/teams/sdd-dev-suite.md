@@ -81,7 +81,7 @@ hierarchical — Multi-level hierarchy: orchestrator coordinates team leads, tea
 ### github-ops
 - **Role**: GitHub operations — branch management, PR creation, CI monitoring, commit hygiene
 - **Tier**: support
-- **Model hint**: sonnet
+- **Model hint**: haiku
 - **Domain**: .github/**, *.yml, *.yaml
 - **Reports to**: team-leader
 - **Tools**: Read, Glob, Grep, Write, Edit, Bash
@@ -96,7 +96,7 @@ hierarchical — Multi-level hierarchy: orchestrator coordinates team leads, tea
 ### tester-back
 - **Role**: Backend testing specialist — unit tests, integration tests, API contract tests
 - **Tier**: specialist
-- **Model hint**: sonnet
+- **Model hint**: haiku
 - **Domain**: tests/api/**, tests/services/**, tests/integration/**, tests/unit/**
 - **Reports to**: team-leader
 - **Tools**: Read, Glob, Grep, Write, Edit, Bash
@@ -104,7 +104,7 @@ hierarchical — Multi-level hierarchy: orchestrator coordinates team leads, tea
 ### tester-front
 - **Role**: Frontend testing specialist — component tests, e2e tests, visual regression
 - **Tier**: specialist
-- **Model hint**: sonnet
+- **Model hint**: haiku
 - **Domain**: tests/components/**, tests/e2e/**, cypress/**, playwright/**
 - **Reports to**: team-leader
 - **Tools**: Read, Glob, Grep, Write, Edit, Bash

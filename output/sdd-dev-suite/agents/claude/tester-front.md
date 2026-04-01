@@ -1,7 +1,7 @@
 ---
 name: tester-front
 description: Frontend testing specialist — component tests, e2e tests, visual regression
-model: sonnet
+model: haiku
 tools: [Read, Glob, Grep, Write, Edit, Bash]
 disallowedTools: []
 mcpServers:

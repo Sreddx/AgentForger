@@ -1,7 +1,7 @@
 ---
 name: github-ops
 description: GitHub operations — branch management, PR creation, CI monitoring, commit hygiene
-model: sonnet
+model: haiku
 tools: [Read, Glob, Grep, Write, Edit, Bash]
 disallowedTools: []
 
